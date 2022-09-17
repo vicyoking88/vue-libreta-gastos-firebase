@@ -180,7 +180,8 @@ export default {
 <style>
 .icon-show,
 .icon-delete,
-.icon-edit {
+.icon-edit,
+.nav-item {
   cursor: pointer;
 }
 </style>
