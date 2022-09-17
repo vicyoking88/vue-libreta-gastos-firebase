@@ -73,7 +73,6 @@ export default {
     logueado: function(user) {
       this.sumat = 0;
       this.total = 0;
-      console.log("ingreso : " + user);
       this.usuario = user;
       /**consultar la coleccion de gastos */
       this.db

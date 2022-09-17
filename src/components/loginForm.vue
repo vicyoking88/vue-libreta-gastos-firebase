@@ -71,7 +71,6 @@ export default {
         .signInWithEmailAndPassword(this.email, this.password)
         .then((response) => {
           this.alert = false;
-          console.log("acabas de autenticar con " + response.user.email);
           this.$emit("logueado", response.user.email);
         })
         .catch((error) => {
