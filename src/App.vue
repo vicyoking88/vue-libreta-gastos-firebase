@@ -30,14 +30,14 @@ import misGastos from "./components/misGastos.vue";
 
 export default {
   name: "App",
-  data: function () {
+  data: function() {
     return {
       logon: false,
       firebase: "",
       db: "",
       gastos: [],
-      total:0,
-      sumat:0,
+      total: 0,
+      sumat: 0,
       datosUser: {},
       usuario: "",
       tipos: ["Todo"],
@@ -54,7 +54,7 @@ export default {
 
   // Your web app's Firebase configuration
   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  beforeMount: function () {
+  beforeMount: function() {
     var firebaseConfig = {
       apiKey: "AIzaSyBZ3Jr8-LzGYe316P6i8nwejxxYwdbywis",
       authDomain: "libreta-gastos.firebaseapp.com",
@@ -70,9 +70,9 @@ export default {
     this.firebase = firebase;
   },
   methods: {
-    logueado: function (user) {
-      this.sumat=0;
-      this.total=0;
+    logueado: function(user) {
+      this.sumat = 0;
+      this.total = 0;
       console.log("ingreso : " + user);
       this.usuario = user;
       /**consultar la coleccion de gastos */
@@ -83,7 +83,6 @@ export default {
         .get()
         .then((gastos) => {
           gastos.forEach((gasto) => {
-
             this.gastos.push({
               nombre: gasto.id,
               tipo: gasto.data().tipo,
@@ -92,7 +91,7 @@ export default {
 
             /**cargue de pestañas */
             this.tipos.push(gasto.data().tipo);
-            
+
             /**filtro por tipo */
             if (this.tipo != "Todo") {
               if (gasto.data().tipo == this.tipo) {
@@ -100,22 +99,21 @@ export default {
                   nombre: gasto.id,
                   tipo: gasto.data().tipo,
                   monto: gasto.data().monto,
-                  
                 });
-                
-                this.total=(gasto.data().monto+this.total)
+
+                this.total = gasto.data().monto + this.total;
               }
             }
           });
-          gastos.forEach(element => 
-          this.sumat=this.sumat + element.data().monto
+          gastos.forEach(
+            (element) => (this.sumat = this.sumat + element.data().monto)
           );
 
           if (this.tipo == "Todo") {
             this.filtro = this.gastos;
             this.total = this.sumat;
           }
-          
+
           this.tabs = [];
           /**convertimos en un arreglo para las pestañas */
           this.tabsR = this.tipos.filter((item, index) => {
@@ -126,27 +124,22 @@ export default {
           });
         });
       /**si no hay filtro que aplicar */
-
-      
-     
-
       this.logon = true;
     },
 
-    filtrar_padre: function (tipo_filtro) {
+    filtrar_padre: function(tipo_filtro) {
       this.tipo = tipo_filtro;
       this.gastos = [];
       this.filtro = [];
       this.logueado(this.usuario);
     },
 
-    salir: function () {
+    salir: function() {
       this.logon = false;
       this.gastos = [];
       this.filtro = [];
-     
     },
-    add: function (newG) {
+    add: function(newG) {
       this.db
         .collection("usuarios")
         .doc(this.usuario)
@@ -161,14 +154,14 @@ export default {
           this.gastos = [];
           this.filtro = [];
           this.datosUser = {};
-         
+
           this.logueado(this.usuario);
         })
         .catch((error) => {
           console.error("Error adding document: ", error);
         });
     },
-    borrar_padre: function (aborrar) {
+    borrar_padre: function(aborrar) {
       console.log("entro a borrar");
       console.log(aborrar);
       this.db
@@ -190,5 +183,4 @@ export default {
   },
 };
 </script>
-<style>
-</style>
+<style></style>
