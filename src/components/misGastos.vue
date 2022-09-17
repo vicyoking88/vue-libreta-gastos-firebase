@@ -3,7 +3,7 @@
     <div class="row">
       <h1 class="display-1 text-center col-sm-11">Mis GAstos</h1>
       <div class="col-sm-1 mt-5">
-        <a @click="mostrarAdd">
+        <a class="icon-show" @click="mostrarAdd">
           <i v-bind:class="iconAdd"></i>
         </a>
       </div>
@@ -65,12 +65,14 @@
       </form>
     </div>
 
-    <h2 class="mb-3">{{usuario}}</h2>
+    <h2 class="mb-3">{{ usuario }}</h2>
 
     <!--MIS PESTAÑAS-->
     <ul class="nav nav-tabs" id="menu">
       <li class="nav-item" v-for="(tab, index) in tabs" :key="index">
-        <a :class="tab.class" aria-current="page" @click="filtrar(tab.name)">{{tab.name}}</a>
+        <a :class="tab.class" aria-current="page" @click="filtrar(tab.name)">{{
+          tab.name
+        }}</a>
       </li>
     </ul>
 
@@ -84,7 +86,6 @@
             <th scope="col" class="text-center">Accion</th>
           </tr>
         </thead>
-       
 
         <tbody>
           <tr v-for="(gasto, index) in gastos" :key="index" ref="cargaGastos">
@@ -92,10 +93,13 @@
             <td v-text="gasto.monto"></td>
             <td v-text="gasto.tipo"></td>
             <td class="text-center">
-              <a @click="modificar(gasto.nombre, gasto.monto, gasto.tipo)">
+              <a
+                class="icon-edit"
+                @click="modificar(gasto.nombre, gasto.monto, gasto.tipo)"
+              >
                 <i class="fas fa-edit fa-2x me-3"></i>
               </a>
-              <a @click="borrar(gasto.nombre)">
+              <a class="icon-delete" @click="borrar(gasto.nombre)">
                 <i class="fas fa-trash-alt fa-2x ms-2"></i>
               </a>
             </td>
@@ -119,7 +123,7 @@
 <script>
 export default {
   name: "misGastos",
-  data: function () {
+  data: function() {
     return {
       mAdd: false,
       mensaje: "cerro sesion",
@@ -130,38 +134,37 @@ export default {
       nombre_modif: "",
       monto_modif: "",
       tipo_modif: "",
-      filtro:this.gastos.gastos,
+      filtro: this.gastos.gastos,
     };
   },
   props: {
     usuario: String,
     gastos: Array,
     total: Number,
-    tabs:Array,
+    tabs: Array,
   },
 
   methods: {
-    filtrar:function(tipo_filtro){
+    filtrar: function(tipo_filtro) {
       this.$emit("filtrar_hijo", tipo_filtro);
-
     },
-    add: function (e) {
+    add: function(e) {
       let newG = [this.campo_nombre, this.campo_monto, this.campo_tipo];
       this.$emit("add", newG);
       e.preventDefault();
     },
-    salir: function () {
+    salir: function() {
       this.$emit("salir");
     },
-    borrar: function (aBorrar) {
+    borrar: function(aBorrar) {
       this.$emit("borrar_hijo", aBorrar);
     },
-    modificar: function (nombre, monto, tipo) {
+    modificar: function(nombre, monto, tipo) {
       this.campo_nombre = nombre;
       this.campo_monto = monto;
       this.campo_tipo = tipo;
     },
-    mostrarAdd: function () {
+    mostrarAdd: function() {
       if (this.mAdd) {
         this.mAdd = false;
         this.iconAdd = "fas fa-plus fa-2x";
@@ -175,4 +178,9 @@ export default {
 </script>
 
 <style>
+.icon-show,
+.icon-delete,
+.icon-edit {
+  cursor: pointer;
+}
 </style>
