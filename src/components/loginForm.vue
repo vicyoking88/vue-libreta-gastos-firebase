@@ -35,7 +35,7 @@
           </div>
 
           <div v-if="alert" class="alert alert-danger" role="alert">
-            Usuario no registrado
+            Contraseña y/o cuenta incorrecta
           </div>
 
           <div id="errorPassword" class="error text-danger mb-4"></div>
